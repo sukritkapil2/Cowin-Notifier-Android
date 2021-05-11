@@ -1,0 +1,2 @@
+rootProject.name = "Cowin Notifier"
+include ':app'

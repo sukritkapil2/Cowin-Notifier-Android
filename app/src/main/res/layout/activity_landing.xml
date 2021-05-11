@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LandingActivity">
+    <TextView
+        android:id="@+id/sub1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Get vaccined earlier"
+        android:textSize="22sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp">
+    </TextView>
+    <TextView
+        android:id="@+id/head1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sub1"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="20sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Get notified about available slots with"
+        android:textSize="30sp"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/head2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="20sp"
+        android:layout_below="@id/head1"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/cowin_notifier"
+        android:textSize="28sp"
+        android:textColor="@color/cowin_blue"
+        >
+    </TextView>
+    <Button
+        android:id="@+id/enter_button"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:text="Get Started"
+        android:textAllCaps="false"
+        android:textSize="18sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginBottom="20sp"
+        android:backgroundTint="@color/cowin_blue">
+    </Button>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/enter_button"
+        android:layout_marginLeft="20sp"
+        android:layout_marginBottom="20sp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="Note:\nCowin Notifier uses the official government\nwebsite cowin to get vaccine updates\n\n© Sukrit Kapil">
+    </TextView>
+</RelativeLayout>
