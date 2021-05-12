@@ -32,27 +32,110 @@
                 android:textSize="18sp"
                 android:fontFamily="@font/montserrat_light">
             </TextView>
+
             <Button
                 android:id="@+id/add_place"
                 android:layout_width="match_parent"
                 android:layout_height="60sp"
                 android:layout_below="@id/info"
-                android:layout_marginTop="20sp"
+                android:layout_marginTop="20dp"
                 android:text="Add Place"
                 android:textAllCaps="false"
                 android:fontFamily="@font/montserrat_bold"
                 >
             </Button>
+
+            <LinearLayout
+                android:id="@+id/after_place_added"
+                android:layout_width="match_parent"
+                android:layout_below="@id/add_place"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <Button
+                    android:id="@+id/notify_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60sp"
+                    android:backgroundTint="@color/green_btn"
+                    android:text="Notify Me"
+                    android:drawableLeft="@drawable/ic_baseline_notifications_active_24"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_weight="1"
+                    >
+                </Button>
+                <View
+                    android:id="@+id/empty_view"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+                <Button
+                    android:id="@+id/view_slots_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60sp"
+                    android:layout_below="@id/notify_btn"
+                    android:backgroundTint="@color/green_btn"
+                    android:text="View Slots"
+                    android:drawableLeft="@drawable/ic_baseline_library_books_24"
+                    android:textAllCaps="false"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_weight="1"
+                    >
+                </Button>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/slots"
+                android:layout_below="@id/after_place_added"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/slot_info"
+                    android:fontFamily="@font/montserrat_light"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:id="@+id/slot_table_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/scroll_table"
+                            android:layout_below="@id/slot_table_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </HorizontalScrollView>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/update_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_place"
+                android:layout_below="@id/after_place_added"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/shape"
                 android:orientation="vertical"
                 android:padding="20dp"
-                android:visibility="visible">
+                android:visibility="gone">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,11 +183,11 @@
                     android:layout_marginTop="10dp"
                     app:boxStrokeColor="@color/teal_200"
                     app:boxStrokeWidthFocused="1dp"
-                    android:visibility="gone"
                     android:textColorHint="@color/light_grey"
                     app:hintTextColor="@color/white">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/pin_edit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
@@ -116,6 +199,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="State"
+                    android:id="@+id/state_text"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:fontFamily="@font/montserrat_light"
                     android:textSize="18sp"
@@ -131,6 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/state_menu"
+                    android:visibility="gone"
                     android:dropDownSelector="@color/teal_200"
                     android:spinnerMode="dropdown"
                     ></Spinner>
@@ -139,6 +225,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="District"
+                    android:id="@+id/district_text"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:fontFamily="@font/montserrat_light"
                     android:textSize="18sp"
@@ -154,6 +242,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/district_menu"
+                        android:visibility="gone"
                         android:dropDownSelector="@color/teal_200"
                         android:spinnerMode="dropdown"
                         ></Spinner>
@@ -194,7 +283,8 @@
                         android:textColor="@color/cowin_blue"
                         android:textAllCaps="false"
                         android:drawableLeft="@drawable/ic_baseline_done_all_24"
-                        app:rippleColor="@color/teal_200">
+                        app:rippleColor="@color/teal_200"
+                        android:layout_weight="1">
                     </Button>
                     <View
                         android:layout_width="0dp"
@@ -209,7 +299,8 @@
                         android:textColor="@color/cowin_blue"
                         android:textAllCaps="false"
                        android:drawableLeft="@drawable/ic_baseline_close_24"
-                        app:rippleColor="@color/teal_200">
+                        app:rippleColor="@color/teal_200"
+                        android:layout_weight="1">
                     </Button>
                 </LinearLayout>
             </LinearLayout>

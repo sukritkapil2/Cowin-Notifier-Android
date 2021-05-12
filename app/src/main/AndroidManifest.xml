@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cowicheck.cowinnotifier">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CowinNotifier">
-        <activity android:name=".DashboardActivity"
-            android:screenOrientation="portrait"
-            android:label="User Dashboard"></activity>
-        <activity android:name=".LandingActivity"
+        <service android:name=".Services.CheckSlotService" android:enabled="true" android:exported="true"/>
+        <activity android:name=".NotifyActivity"
+            android:label="Cowin Notifications"></activity>
+        <activity
+            android:name=".DashboardActivity"
+            android:label="User Dashboard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LandingActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
