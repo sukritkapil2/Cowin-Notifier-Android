@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -385,6 +386,25 @@ public class DashboardActivity extends AppCompatActivity {
         slotInfo = findViewById(R.id.slot_info);
         loadingText = findViewById(R.id.loading_text);
 
+        int nightModeFlags =
+                getApplicationContext().getResources().getConfiguration().uiMode &
+                        Configuration.UI_MODE_NIGHT_MASK;
+
+        switch (nightModeFlags) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                setTheme(android.R.style.Theme_Material_Light_DarkActionBar);
+                Log.i("info", "NIGHT MODE YES");
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                Log.i("info", "NIGHT MODE NO");
+                break;
+
+            case Configuration.UI_MODE_NIGHT_UNDEFINED:
+                Log.i("info", "NIGHT MODE UNDEFINED");
+                break;
+        }
+
         retrofit = RetrofitClientInstance.getRetrofitInstance();
         service = retrofit.create(StateDistrict.class);
         centerService = retrofit.create(Centers.class);
@@ -475,7 +495,7 @@ public class DashboardActivity extends AppCompatActivity {
                         type = "PIN";
                         UserData userData;
                         if(getUserData != null) userData = new UserData("PIN", "", "", 0, Integer.parseInt(pinEntered), dateSelected, getUserData.getFoundSessions());
-                        else userData = new UserData("PIN", "", "", 0, Integer.parseInt(pinEntered), dateSelected, getUserData.getFoundSessions());
+                        else userData = new UserData("PIN", "", "", 0, Integer.parseInt(pinEntered), dateSelected, null);
                         updateInfo("PIN", pinEntered, dateSelected, "", "", userData, true);
                     }
                 } else {

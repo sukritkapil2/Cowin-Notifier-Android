@@ -62,6 +62,6 @@
         android:layout_marginLeft="20sp"
         android:layout_marginBottom="20sp"
         android:fontFamily="@font/montserrat_light"
-        android:text="Note:\nCowin Notifier uses the official government\nwebsite cowin to get vaccine updates\n\n© Sukrit Kapil">
+        android:text="Note:\nCowin Notifier uses the official government\nwebsite cowin to get vaccine updates\n\n© Sukrit Kapil\n\nThe app looks best in light theme\nand forced dark theme.">
     </TextView>
 </RelativeLayout>

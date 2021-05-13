@@ -54,6 +54,7 @@ public class CheckSlotService extends Service {
     public static boolean slotFound= false;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private ArrayList<CenterSession> foundSessions = new ArrayList<>();
+    private int total_slots = 0;
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -135,15 +136,18 @@ public class CheckSlotService extends Service {
                 if(session.getAvailable_capacity() > 0) {
                     if(age.equals("45 +") && session.getMin_age_limit() == 45) {
                         slotFound = true;
+                        total_slots += 1;
                         Log.i("info", "SLOT FOUND!");
                         centerSession.sessions.add(session);
                     }
                     else if(age.equals("18 +") && session.getMin_age_limit() == 18) {
                         slotFound = true;
+                        total_slots += 1;
                         Log.i("info", "SLOT FOUND!");
                         centerSession.sessions.add(session);
                     } else if(age.equals("Any Age")) {
                         slotFound = true;
+                        total_slots += 1;
                         Log.i("info", "SLOT FOUND!");
                         centerSession.sessions.add(session);
                     }
@@ -257,10 +261,18 @@ public class CheckSlotService extends Service {
 
                         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+                        String notificationDesc = "";
+
+                        if(getUserData.getPlaceType().equals("PIN")) {
+                            notificationDesc += "A total of " + total_slots + " vaccination slots has been found near you for the PIN: " + intent.getIntExtra("pin", 0);
+                        } else {
+                            notificationDesc += "A total of " + total_slots + " vaccination slots has been found near you for the DISTRICT: " + getUserData.getDistrictName();
+                        }
+
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID_2)
                                 .setSmallIcon(R.drawable.ic_launcher_foreground)
-                                .setContentTitle("Slot Found")
-                                .setContentText("A vaccine slot has been found for you")
+                                .setContentTitle(foundSessions.size() + " centers found for age: " + intent.getStringExtra("age"))
+                                .setContentText(notificationDesc)
                                 .setContentIntent(pendingIntent)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                                 .setSound(soundUri);
