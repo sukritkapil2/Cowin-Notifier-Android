@@ -17,11 +17,9 @@
             android:label="Cowin Notifications"></activity>
         <activity
             android:name=".DashboardActivity"
-            android:label="User Dashboard"
-            android:screenOrientation="portrait" />
+            android:label="User Dashboard" />
         <activity
-            android:name=".LandingActivity"
-            android:screenOrientation="portrait">
+            android:name=".LandingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

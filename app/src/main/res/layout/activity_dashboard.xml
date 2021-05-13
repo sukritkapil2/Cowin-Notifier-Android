@@ -101,6 +101,15 @@
                     android:layout_height="wrap_content">
 
                 </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="Loading Data. Please Wait"
+                    android:textSize="16sp"
+                    android:id="@+id/loading_text"
+                    android:visibility="gone"
+                    android:layout_marginTop="5dp"></TextView>
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">

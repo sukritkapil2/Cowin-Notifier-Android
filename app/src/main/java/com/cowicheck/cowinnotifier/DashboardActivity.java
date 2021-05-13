@@ -59,7 +59,7 @@ import static android.view.View.GONE;
 public class DashboardActivity extends AppCompatActivity {
 
     private Button addPlace, changeDate, closeButton, updateButton, viewSlotsButton, notifyButton;
-    private TextView selectedDate, stateText, districtText, infoText, slotInfo;
+    private TextView selectedDate, stateText, districtText, infoText, slotInfo, loadingText;
     private RadioGroup radioGroup;
     private TextInputLayout textInputLayout;
     private State[] stateList;
@@ -149,10 +149,13 @@ public class DashboardActivity extends AppCompatActivity {
         eighteenPlus = 0;
         fourtyFivePlus = 0;
 
+        loadingText.setVisibility(GONE);
+
         if(centers == null) {
             slotInfo.setText("No centers found !");
         } else {
             Log.i("info", "Response Length: " + centers.length);
+
             LinearLayout linearLayout = findViewById(R.id.slot_table_header);
             linearLayout.removeAllViews();
             LinearLayout scrollTable = findViewById(R.id.scroll_table);
@@ -182,7 +185,16 @@ public class DashboardActivity extends AppCompatActivity {
             for(int i = 0;i < 7; i++) {
                 TextView textView2 = new TextView(linearLayout.getContext());
                 textView2.setText(date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + date.getYear());
-                dateArray.add(date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + date.getYear());
+
+                String tempString;
+
+                if((date.getMonthValue() + "").length() == 1) {
+                    tempString = "0" + date.getMonthValue();
+                } else {
+                    tempString = date.getMonthValue() + "";
+                }
+
+                dateArray.add(date.getDayOfMonth() + "-" + tempString + "-" + date.getYear());
                 textView2.setPadding(dpToPixel(10), dpToPixel(10), dpToPixel(10), dpToPixel(10));
                 textView2.setWidth(dpToPixel(120));
                 textView2.setTypeface(regularTypeFace);
@@ -206,7 +218,7 @@ public class DashboardActivity extends AppCompatActivity {
                 }
 
                 for(int j = 0;j < sessions.length; j++) {
-                    if(map.containsKey(sessions[j].getDate())) {
+                    if(map.get(sessions[j].getDate()) != null) {
                         Session[] tempSessionList = {map.get(sessions[j].getDate())[0], sessions[j]};
                         map.put(sessions[j].getDate(), tempSessionList);
                     } else {
@@ -226,7 +238,7 @@ public class DashboardActivity extends AppCompatActivity {
                 LinearLayout tempLayout = new LinearLayout(newLinearLayout.getContext());
                 tempLayout.setOrientation(LinearLayout.VERTICAL);
                 TextView textView2 = new TextView(newLinearLayout.getContext());
-                textView2.setText(centerName);
+                textView2.setText(centerName + "\nPIN: " + center.getPincode());
                 textView2.setPadding(dpToPixel(10), dpToPixel(10), dpToPixel(10), dpToPixel(10));
                 textView2.setWidth(dpToPixel(120));
                 textView2.setTypeface(regularTypeFace);
@@ -245,7 +257,16 @@ public class DashboardActivity extends AppCompatActivity {
 
                     if(entry.getValue() == null) {
                         text += "NA";
+
+                        textView3.setText(text);
+                        textView3.setPadding(dpToPixel(10), dpToPixel(10), dpToPixel(10), dpToPixel(10));
+                        textView3.setWidth(dpToPixel(120));
+                        textView3.setTypeface(regularTypeFace);
+
+                        tempLinearLayout.addView(textView3);
                     } else {
+
+                        boolean eighteenSlot = false;
 
                         for(int l = 0;l < entry.getValue().length; l++) {
 
@@ -256,17 +277,19 @@ public class DashboardActivity extends AppCompatActivity {
                             } else {
                                 if(entry.getValue()[l].getAvailable_capacity() > 0) {
                                     eighteenPlus++;
+                                    eighteenSlot = true;
                                 }
                             }
 
                             if(l == 1) text += "\n";
-                            text += "Qty: " + entry.getValue()[l].getAvailable_capacity() + "\nAge: " + entry.getValue()[l].getMin_age_limit() + "+\n" + entry.getValue()[l].getVaccine() + "\n";
+                            text += "Qty: " + entry.getValue()[l].getAvailable_capacity() + "\nAge: " + entry.getValue()[l].getMin_age_limit() + "+\n" + entry.getValue()[l].getVaccine() + "\nDate: " + entry.getValue()[l].getDate() + "\n";
                         }
 
                         textView3.setText(text);
                         textView3.setPadding(dpToPixel(10), dpToPixel(10), dpToPixel(10), dpToPixel(10));
                         textView3.setWidth(dpToPixel(120));
                         textView3.setTypeface(regularTypeFace);
+                        if(eighteenSlot) textView3.setTextColor(Color.parseColor("blue"));
 
                         tempLinearLayout.addView(textView3);
                     }
@@ -275,7 +298,7 @@ public class DashboardActivity extends AppCompatActivity {
                 newLinearLayout.addView(tempLinearLayout);
             }
 
-            slotInfo.setText("18+ Slots: " + eighteenPlus + " and 45+ Slots: " + fourtyFivePlus);
+            slotInfo.setText("Available 18+ Slots: " + eighteenPlus + " and 45+ Slots: " + fourtyFivePlus);
         }
     }
 
@@ -283,6 +306,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         LinearLayout linearLayoutSlots = findViewById(R.id.slots);
         linearLayoutSlots.setVisibility(View.VISIBLE);
+        loadingText.setVisibility(View.VISIBLE);
 
         if(type.equals("PIN")) {
             Call<CenterList> call = centerService.getCentersByPin(pinVal, makeDateToAPI(dateSelected));
@@ -359,6 +383,7 @@ public class DashboardActivity extends AppCompatActivity {
         lightTypeFace = getResources().getFont(R.font.montserrat_light);
         regularTypeFace = getResources().getFont(R.font.montserrat_regular);
         slotInfo = findViewById(R.id.slot_info);
+        loadingText = findViewById(R.id.loading_text);
 
         retrofit = RetrofitClientInstance.getRetrofitInstance();
         service = retrofit.create(StateDistrict.class);
@@ -448,7 +473,9 @@ public class DashboardActivity extends AppCompatActivity {
                         if(tempDate != null) dateSelected = tempDate;
                         else dateSelected = LocalDate.now().getDayOfMonth() + " " + LocalDate.now().getMonth() + " " + LocalDate.now().getYear();
                         type = "PIN";
-                        UserData userData = new UserData("PIN", "", "", 0, Integer.parseInt(pinEntered), dateSelected, getUserData.getFoundSessions());
+                        UserData userData;
+                        if(getUserData != null) userData = new UserData("PIN", "", "", 0, Integer.parseInt(pinEntered), dateSelected, getUserData.getFoundSessions());
+                        else userData = new UserData("PIN", "", "", 0, Integer.parseInt(pinEntered), dateSelected, getUserData.getFoundSessions());
                         updateInfo("PIN", pinEntered, dateSelected, "", "", userData, true);
                     }
                 } else {
@@ -459,7 +486,9 @@ public class DashboardActivity extends AppCompatActivity {
                         if(tempDate != null) dateSelected = tempDate;
                         else dateSelected = LocalDate.now().getDayOfMonth() + " " + LocalDate.now().getMonth() + " " + LocalDate.now().getYear();
                         type = "DISTRICT";
-                        UserData userData = new UserData("DISTRICT", districtName, stateName, districtId, 0, dateSelected, getUserData.getFoundSessions());
+                        UserData userData;
+                        if(getUserData != null) userData = new UserData("DISTRICT", districtName, stateName, districtId, 0, dateSelected, getUserData.getFoundSessions());
+                        else userData = new UserData("DISTRICT", districtName, stateName, districtId, 0, dateSelected, null);
                         updateInfo("DISTRICT", "", dateSelected, districtName, stateName, userData, true);
                     }
                 }

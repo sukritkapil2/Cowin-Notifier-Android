@@ -8,6 +8,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -252,12 +254,16 @@ public class CheckSlotService extends Service {
                         myEdit.commit();
 
                         createNotificationChannel2();
+
+                        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID_2)
                                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                                 .setContentTitle("Slot Found")
                                 .setContentText("A vaccine slot has been found for you")
                                 .setContentIntent(pendingIntent)
-                                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                .setSound(soundUri);
 
                         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
                         notificationManager.notify(2, builder.build());

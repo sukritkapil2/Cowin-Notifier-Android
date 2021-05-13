@@ -84,16 +84,46 @@
                 android:id="@+id/notify_btn"
                 android:layout_height="60dp"></Button>
 
-            <LinearLayout
+            <Button android:layout_height="60dp"
+                android:id="@+id/redirect_btn"
+                android:layout_width="match_parent"
+                android:layout_below="@id/notify_btn"
+                android:layout_marginTop="5dp"
+                android:text="Open Cowin Website"
+                android:backgroundTint="@color/green_btn">
+            </Button>
+
+            <Button android:layout_height="60dp"
+                android:id="@+id/sound_btn"
+                android:layout_width="match_parent"
+                android:layout_below="@id/redirect_btn"
+                android:layout_marginTop="5dp"
+                android:text="Enable Notify Sound"
+                android:backgroundTint="@color/blue_btn">
+            </Button>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/sound_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/notify_btn"
+                android:layout_below="@id/sound_btn"
+                android:text="Note:\nThe server ping frequency is after every 10s.\n\nNo notification sound? Click the button above. Go to the notification section and allow sounds."
+                android:fontFamily="@font/montserrat_light"></TextView>
+
+
+            <LinearLayout
+                android:id="@+id/found_section"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sound_text"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Last Found Slots"
+                    android:layout_marginBottom="20dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:textSize="16sp"
                     android:id="@+id/found_text">
@@ -109,11 +139,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/session_list"
-                            android:orientation="vertical"></LinearLayout>
+                            android:orientation="vertical">
+
+                        </LinearLayout>
                     </RelativeLayout>
                 </HorizontalScrollView>
             </LinearLayout>
-
 
         </RelativeLayout>
     </ScrollView>

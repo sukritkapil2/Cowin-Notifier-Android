@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +33,9 @@ public class NotifyActivity extends AppCompatActivity {
     private UserData getUserData;
     private Button startListening;
     private RadioGroup radioGroup;
-    private String age = "18";
+    private String age = "18 +";
     private Typeface boldTypeFace, lightTypeFace, regularTypeFace;
+    private Button redirectBtn, soundBtn;
 
     int dpToPixel(int val) {
         final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
@@ -76,10 +79,11 @@ public class NotifyActivity extends AppCompatActivity {
                         Session session = centerSession.getSessions().get(j);
 
                         TextView textView3 = new TextView(newLinearLayout.getContext());
-                        textView2.setText("Qty: " + session.getAvailable_capacity() + "\nAge: " + session.getMin_age_limit() + "\nDate: " + session.getDate() + "\nVaccine: " + session.getVaccine());
-                        textView2.setPadding(dpToPixel(10), dpToPixel(10), dpToPixel(10), dpToPixel(10));
-                        textView2.setWidth(dpToPixel(120));
-                        textView2.setTypeface(regularTypeFace);
+                        textView3.setText("Qty: " + session.getAvailable_capacity() + "\nAge: " + session.getMin_age_limit() + "\nDate: " + session.getDate() + "\nVaccine: " + session.getVaccine());
+                        textView3.setPadding(dpToPixel(10), dpToPixel(10), dpToPixel(10), dpToPixel(10));
+                        textView3.setWidth(dpToPixel(120));
+                        textView3.setTypeface(regularTypeFace);
+                        textView3.setBackgroundColor(Color.parseColor("#efffff"));
                         newLinearLayout.addView(textView3);
                     }
 
@@ -102,11 +106,31 @@ public class NotifyActivity extends AppCompatActivity {
         boldTypeFace = getResources().getFont(R.font.montserrat_bold);
         lightTypeFace = getResources().getFont(R.font.montserrat_light);
         regularTypeFace = getResources().getFont(R.font.montserrat_regular);
+        redirectBtn = findViewById(R.id.redirect_btn);
+        soundBtn = findViewById(R.id.sound_btn);
+
+        soundBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            }
+        });
 
         sharedPreferences = getSharedPreferences("user-data", Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("placeData", "");
         getUserData = gson.fromJson(json, UserData.class);
+
+        redirectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://selfregistration.cowin.gov.in/"));
+                startActivity(browserIntent);
+            }
+        });
 
         if(getUserData.getFoundSessions() != null) {
             setFoundSlots(sharedPreferences);
@@ -148,7 +172,12 @@ public class NotifyActivity extends AppCompatActivity {
                     serviceIntent.putExtra("district_id", getUserData.getDistrictId());
                     serviceIntent.putExtra("date", getUserData.getDate());
                     serviceIntent.putExtra("age", age);
-                    serviceIntent.putExtra("inputExtra", "Searching for vaccine slots");
+                    if(getUserData.getPlaceType().equals("PIN")) {
+                        serviceIntent.putExtra("inputExtra", "Searching in PIN: " + getUserData.getPin() + ", AGE: " + age);
+                    } else {
+                        serviceIntent.putExtra("inputExtra", "Searching in DISTRICT: " + getUserData.getDistrictName() + ", AGE: " + age);
+                    }
+
                     startService(serviceIntent);
                 }
             }
