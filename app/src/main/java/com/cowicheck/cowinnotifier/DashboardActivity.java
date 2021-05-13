@@ -570,7 +570,7 @@ public class DashboardActivity extends AppCompatActivity {
                         } else {
                             districtList = response.body().getDistricts();
 
-                            DistrictAdapter districtAdapter = new DistrictAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, districtList);
+                            DistrictAdapter districtAdapter = new DistrictAdapter(getApplicationContext(), R.layout.dropdown_item, districtList);
                             districtSpinner.setAdapter(districtAdapter);
                             districtSpinner.setSelection(0);
                         }
@@ -633,7 +633,7 @@ public class DashboardActivity extends AppCompatActivity {
                             } else {
                                 stateList = response.body().getStates();
 
-                                StateAdapter stateAdapter = new StateAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, stateList);
+                                StateAdapter stateAdapter = new StateAdapter(getApplicationContext(), R.layout.dropdown_item, stateList);
                                 stateSpinner.setAdapter(stateAdapter);
                                 stateSpinner.setSelection(0);
                             }
