@@ -38,6 +38,8 @@ import com.cowicheck.cowinnotifier.Models.StateList;
 import com.cowicheck.cowinnotifier.Models.UserData;
 import com.cowicheck.cowinnotifier.Retrofit.RetrofitClientInstance;
 import com.cowicheck.cowinnotifier.Services.CheckSlotService;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -81,6 +83,7 @@ public class DashboardActivity extends AppCompatActivity {
     private String type;
     private int eighteenPlus = 0;
     private int fourtyFivePlus = 0;
+    private FloatingActionButton fab;
 
     boolean isNumeric(String s) {
         try {
@@ -385,6 +388,17 @@ public class DashboardActivity extends AppCompatActivity {
         regularTypeFace = getResources().getFont(R.font.montserrat_regular);
         slotInfo = findViewById(R.id.slot_info);
         loadingText = findViewById(R.id.loading_text);
+        fab = findViewById(R.id.help_fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialAlertDialogBuilder(DashboardActivity.this)
+                        .setTitle("Developer Info")
+                        .setMessage("Sukrit Kapil\nBITS Pilani Hyderabad Campus\nBlog: https://sukritkapil2.github.io/\n\nMade with ❤ in Java")
+                        .show();
+            }
+        });
 
         int nightModeFlags =
                 getApplicationContext().getResources().getConfiguration().uiMode &

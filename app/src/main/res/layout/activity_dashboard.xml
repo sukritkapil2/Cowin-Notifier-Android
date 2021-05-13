@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DashboardActivity"
-    android:id="@+id/main_layout"
-    android:padding="20sp">
+    android:id="@+id/main_layout">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="20sp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -315,4 +315,17 @@
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_baseline_help_24"
+        android:tint="@color/white"
+        app:tint="@color/white"
+        android:id="@+id/help_fab"
+        android:backgroundTint="@color/cowin_blue"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        ></com.google.android.material.floatingactionbutton.FloatingActionButton>
 </RelativeLayout>

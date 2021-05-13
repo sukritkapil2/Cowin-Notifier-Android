@@ -3,23 +3,28 @@
     package="com.cowicheck.cowinnotifier">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_cowin_notifier"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_cowin_notifier_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CowinNotifier">
-        <service android:name=".Services.CheckSlotService" android:enabled="true" android:exported="true"/>
-        <activity android:name=".NotifyActivity"
-            android:label="Cowin Notifications"></activity>
+
+        <service
+            android:name=".Services.CheckSlotService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".NotifyActivity"
+            android:label="Cowin Notifications" />
         <activity
             android:name=".DashboardActivity"
             android:label="User Dashboard" />
-        <activity
-            android:name=".LandingActivity">
+        <activity android:name=".LandingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

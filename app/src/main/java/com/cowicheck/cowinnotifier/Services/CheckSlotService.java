@@ -55,6 +55,7 @@ public class CheckSlotService extends Service {
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private ArrayList<CenterSession> foundSessions = new ArrayList<>();
     private int total_slots = 0;
+    private int total_centers = 0;
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -130,23 +131,28 @@ public class CheckSlotService extends Service {
             CenterSession centerSession = new CenterSession(new ArrayList<Session>(), center.getName());
             Session[] sessions = center.getSessions();
 
+            boolean tempCenterValid = false;
+
             for(int j = 0;j < sessions.length; j++) {
                 Session session = sessions[j];
 
                 if(session.getAvailable_capacity() > 0) {
                     if(age.equals("45 +") && session.getMin_age_limit() == 45) {
                         slotFound = true;
+                        tempCenterValid = true;
                         total_slots += 1;
                         Log.i("info", "SLOT FOUND!");
                         centerSession.sessions.add(session);
                     }
                     else if(age.equals("18 +") && session.getMin_age_limit() == 18) {
                         slotFound = true;
+                        tempCenterValid = true;
                         total_slots += 1;
                         Log.i("info", "SLOT FOUND!");
                         centerSession.sessions.add(session);
                     } else if(age.equals("Any Age")) {
                         slotFound = true;
+                        tempCenterValid = true;
                         total_slots += 1;
                         Log.i("info", "SLOT FOUND!");
                         centerSession.sessions.add(session);
@@ -154,6 +160,7 @@ public class CheckSlotService extends Service {
                 }
             }
 
+            if(tempCenterValid) total_centers++;
             foundSessions.add(centerSession);
         }
         Log.i("info", "No Slots Found. Fetching Again");
@@ -171,7 +178,7 @@ public class CheckSlotService extends Service {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("Cowin Notifier is finding slots")
                 .setContentText(input)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.ic_launcher_cowin_notifier)
                 .setContentIntent(pendingIntent)
                 .build();
 
@@ -270,8 +277,8 @@ public class CheckSlotService extends Service {
                         }
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID_2)
-                                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                                .setContentTitle(foundSessions.size() + " centers found for age: " + intent.getStringExtra("age"))
+                                .setSmallIcon(R.mipmap.ic_launcher_cowin_notifier2)
+                                .setContentTitle(total_centers + " centers found for age: " + intent.getStringExtra("age"))
                                 .setContentText(notificationDesc)
                                 .setContentIntent(pendingIntent)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
