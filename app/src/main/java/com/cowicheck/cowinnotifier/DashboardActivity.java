@@ -2,6 +2,7 @@ package com.cowicheck.cowinnotifier;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -393,7 +394,7 @@ public class DashboardActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MaterialAlertDialogBuilder(DashboardActivity.this)
+                new AlertDialog.Builder(DashboardActivity.this)
                         .setTitle("Developer Info")
                         .setMessage("Sukrit Kapil\nBITS Pilani Hyderabad Campus\nBlog: https://sukritkapil2.github.io/\n\nMade with ❤ in Java")
                         .show();
