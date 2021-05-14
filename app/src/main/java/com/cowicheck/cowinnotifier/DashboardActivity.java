@@ -62,18 +62,20 @@ import static android.view.View.GONE;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    //View Variables
     private Button addPlace, changeDate, closeButton, updateButton, viewSlotsButton, notifyButton;
     private TextView selectedDate, stateText, districtText, infoText, slotInfo, loadingText;
     private RadioGroup radioGroup;
     private TextInputLayout textInputLayout;
-    private State[] stateList;
-    private District[] districtList;
     private RelativeLayout relativeLayout;
+    private TextInputEditText pinInput;
     private Spinner stateSpinner, districtSpinner;
+    private FloatingActionButton fab;
+
+    //Class Properties
     private Retrofit retrofit;
     private StateDistrict service;
     private Centers centerService;
-    private TextInputEditText pinInput;
     private String dateSelected, tempDate;
     private String districtName = "", stateName = "";
     private long districtId = 0;
@@ -84,8 +86,10 @@ public class DashboardActivity extends AppCompatActivity {
     private String type;
     private int eighteenPlus = 0;
     private int fourtyFivePlus = 0;
-    private FloatingActionButton fab;
+    private State[] stateList;
+    private District[] districtList;
 
+    //Checks if a string is numeric or not
     boolean isNumeric(String s) {
         try {
           int value = Integer.parseInt(s);
@@ -96,6 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
         return false;
     }
 
+    //hides the update place dialog if visible or vice-versa
     void hideUpdatePlace() {
         LinearLayout linearLayout = findViewById(R.id.update_place);
 
@@ -106,6 +111,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    //updates the view and the local storage data to the newly entered data
     void updateInfo(String type, String pin, String date, String district, String state, UserData userData, boolean update) {
         if(type.equals("PIN")) {
             infoText.setTypeface(regularTypeFace);
@@ -131,12 +137,14 @@ public class DashboardActivity extends AppCompatActivity {
         updateSlots();
     }
 
+    //converts dp to pixels
     int dpToPixel(int val) {
         final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
 
         return (int)(scale * val + 0.5f);
     }
 
+    //converts the dd mmm yyyy to dd-mm-yy format for api call
     String makeDateToAPI(String date) {
         String resultDate = "";
 
@@ -149,6 +157,7 @@ public class DashboardActivity extends AppCompatActivity {
         return resultDate;
     }
 
+    //sets up the view of the slots table
     void setSlotsTable(CenterList centerList) {
         Center[] centers = centerList.getCenters();
         eighteenPlus = 0;
@@ -307,6 +316,7 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    //update the slots on a change in the place
     void updateSlots() {
 
         LinearLayout linearLayoutSlots = findViewById(R.id.slots);
@@ -401,6 +411,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
+        //check if dark mode is enabled
         int nightModeFlags =
                 getApplicationContext().getResources().getConfiguration().uiMode &
                         Configuration.UI_MODE_NIGHT_MASK;
@@ -427,6 +438,7 @@ public class DashboardActivity extends AppCompatActivity {
         selectedDate.setText("Date: " + LocalDate.now().getDayOfMonth() + " " + LocalDate.now().getMonth() + " " + LocalDate.now().getYear());
         dateSelected = LocalDate.now().getDayOfMonth() + " " + LocalDate.now().getMonth() + " " + LocalDate.now().getYear();
 
+        //set user data if not entering the app first time
         if(getUserData != null) {
             type = getUserData.getPlaceType();
             pinVal = getUserData.getPin();
@@ -444,6 +456,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(DashboardActivity.this);
 
+        //check if the background service is running or not
         if(CheckSlotService.isRunning) {
             addPlace.setText("Listening to Updates");
             notifyButton.setVisibility(GONE);

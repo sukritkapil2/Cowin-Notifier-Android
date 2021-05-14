@@ -107,22 +107,6 @@ public class CheckSlotService extends Service {
         }
     };
 
-    private void startChecking() {
-        mHandler.postDelayed(runnable, 2000);
-    }
-
-    String makeDateToAPI(String date) {
-        String resultDate = "";
-
-        String[] dateArray = date.split(" ");
-
-        resultDate += dateArray[0] + "-";
-        resultDate += Month.valueOf(dateArray[1]).getValue() + "-";
-        resultDate += dateArray[2];
-
-        return resultDate;
-    }
-
     void checkSlots(CenterList centerList, String age) {
         Center[] centers = centerList.getCenters();
 
@@ -200,8 +184,6 @@ public class CheckSlotService extends Service {
                 if(!isRunning) {
                     Log.i("info", "starting session");
                     isRunning = true;
-                    //Call<CenterList> callPin = centerService.getCentersByPin(intent.getIntExtra("pin", 0), makeDateToAPI(intent.getStringExtra("date")));
-                    //Call<CenterList> callDistrict = centerService.getCentersByDistrict(intent.getLongExtra("district_id", 1), makeDateToAPI(intent.getStringExtra("date")));
 
                     while(!slotFound && isRunning) {
                         if(intent.getStringExtra("type").equals("PIN")) {
