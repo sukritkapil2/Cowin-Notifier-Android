@@ -6,6 +6,13 @@ Cowin Notifier is an android app that runs in the background and informs you whe
 
 ![Cowin Notifier Logo](https://github.com/sukritkapil2/Cowin-Notifier-Android/blob/master/app/src/main/ic_launcher_cowin_notifier-playstore.png?raw=true)
 
+## Unqiue Features
+
+* Will continuously run in the background and ping the server every 10 seconds, so that you will know immediately whenever a slot is found.
+* Notifier checks for the next 7 days from the current date not the selected date. So the user can keep the app running and not worry about changing the date again and again.
+* The notifier takes care of bad network conditions. It will keep running even if internet is not available and whenever the interent is available it will again start pinging the server
+* Minimal data usage is there. It only gets a JSON response every 10 seconds. So even after 4-5 days of continuous background running, the maximum data usage will not exceed 10 Mb
+
 ## Installation
 
 Download the .apk file for your android phone from here.
