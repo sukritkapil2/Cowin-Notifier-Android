@@ -1,5 +1,7 @@
 # Cowin Notifier Android
 
+[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Cowin Notifier is an android app that runs in the background and informs you whenever an available slot is found for the mentioned slot and age group.
 
 ![Cowin Notifier Logo](https://github.com/sukritkapil2/Cowin-Notifier-Android/blob/master/app/src/main/ic_launcher_cowin_notifier-playstore.png?raw=true)
