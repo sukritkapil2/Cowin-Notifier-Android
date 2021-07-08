@@ -23,7 +23,7 @@ Cowin Notifier is an android app that runs in the background and informs you whe
 
 Download the .apk file for your android phone from here.
 
-[Google Drive](https://drive.google.com/file/d/11pKVg08d-ilzCI8Xjnn7z_VidSVGOK1H/view?fbclid=IwAR3HC07pNP84zIolLENgABhifg-RV8XslrS2iVd996tzwC0Cu4Kj1bXMmOk)
+[Google Drive](https://drive.google.com/file/d/1Djre0o9zno1cvPrMWEkLPUDAt4Hyjcg6/view?usp=sharing)
 
 [Media Fire](http://www.mediafire.com/file/if5h59wgok8b0h5/Cowin_Notifier_v1.3.1.apk/file)
 
