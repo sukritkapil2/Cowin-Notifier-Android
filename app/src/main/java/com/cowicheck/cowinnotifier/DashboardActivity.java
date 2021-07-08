@@ -185,7 +185,7 @@ public class DashboardActivity extends AppCompatActivity {
             linearLayout.addView(textView);
 
             String[] dateParts = dateSelected.split(" ");
-            String monthString;
+            String monthString, dateString;
 
             if((Month.valueOf(dateParts[1]).getValue() + "").length() == 1) {
                 monthString = "0" + Month.valueOf(dateParts[1]).getValue();
@@ -193,7 +193,13 @@ public class DashboardActivity extends AppCompatActivity {
                 monthString = Month.valueOf(dateParts[1]).getValue() + "";
             }
 
-            LocalDate date = LocalDate.parse(dateParts[2] + "-" + monthString + "-" + dateParts[0]);
+            if((dateParts[0] + "").length() == 1) {
+                dateString = "0" + dateParts[0];
+            } else {
+                dateString = dateParts[0] + "";
+            }
+
+            LocalDate date = LocalDate.parse(dateParts[2] + "-" + monthString + "-" + dateString);
             ArrayList<String> dateArray = new ArrayList<>();
 
             for(int i = 0;i < 7; i++) {
