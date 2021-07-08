@@ -25,8 +25,6 @@ Download the .apk file for your android phone from here.
 
 [Google Drive](https://drive.google.com/file/d/1Djre0o9zno1cvPrMWEkLPUDAt4Hyjcg6/view?usp=sharing)
 
-[Media Fire](http://www.mediafire.com/file/if5h59wgok8b0h5/Cowin_Notifier_v1.3.1.apk/file)
-
 ## Usage
 
 After installation, you can add a pincode or select a district from the edit place section.
